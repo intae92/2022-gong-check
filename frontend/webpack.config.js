@@ -19,7 +19,8 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html',
+      template: 'public/index.html',
+      favicon: 'src/assets/favicon.png',
     }),
     new CleanWebpackPlugin({
       cleanAfterEveryBuildPatterns: ['dist'],
@@ -32,6 +33,15 @@ const config = {
         exclude: ['/node_modules/'],
         use: {
           loader: 'babel-loader',
+        },
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[path]/[name].[ext]',
+          },
         },
       },
     ],

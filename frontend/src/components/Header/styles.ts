@@ -1,22 +1,23 @@
 import { css } from '@emotion/react';
 
-const headerDiv = css`
+import theme from '@/styles/theme';
+
+const header = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  box-shadow: 0 6px 4px -4px ${theme.colors.shadow30};
   width: 100%;
   height: 50px;
-
   padding: 0 8px;
+  position: relative;
+  cursor: pointer;
 `;
 
 const arrowBackIcon = css`
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 `;
 
-const styles = { headerDiv, arrowBackIcon };
+const styles = { header, arrowBackIcon };
 
 export default styles;

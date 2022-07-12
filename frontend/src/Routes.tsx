@@ -1,15 +1,11 @@
-import SpaceList from './pages/SpaceList';
-import JobList from './pages/JobList';
-import TaskList from './pages/TaskList';
-import { Outlet } from 'react-router-dom';
+import { lazy } from 'react';
 
-const DefaultLayout = () => {
-  return (
-    <>
-      <Outlet />
-    </>
-  );
-};
+import DefaultLayout from '@/layouts/DefaultLayout';
+import UserLayout from '@/layouts/UserLayout';
+
+const SpaceListPage = lazy(() => import('@/pages/SpaceList'));
+const JobListPage = lazy(() => import('@/pages/JobList'));
+const TaskListPage = lazy(() => import('@/pages/TaskList'));
 
 const routes = [
   {
@@ -17,19 +13,20 @@ const routes = [
     element: <DefaultLayout />,
     children: [
       {
-        path: ':hostId',
+        path: 'enter/:hostId',
+        element: <UserLayout />,
         children: [
           {
             path: 'spaces',
-            element: <SpaceList />,
+            element: <SpaceListPage />,
           },
           {
             path: 'spaces/:spaceId',
-            element: <JobList />,
+            element: <JobListPage />,
           },
           {
             path: 'spaces/:spaceId/:jobId',
-            element: <TaskList />,
+            element: <TaskListPage />,
           },
         ],
       },

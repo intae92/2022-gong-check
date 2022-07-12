@@ -20,6 +20,7 @@ import org.hibernate.annotations.ColumnDefault;
 public class RunningTask {
 
     @Id
+    @JoinColumn(name = "task_id")
     private Long taskId;
 
     @MapsId("taskId")
@@ -43,6 +44,10 @@ public class RunningTask {
         this.task = task;
         this.isChecked = isChecked;
         this.createdAt = createdAt;
+    }
+
+    public void flipCheckedStatus() {
+        isChecked = !isChecked;
     }
 
     @Override

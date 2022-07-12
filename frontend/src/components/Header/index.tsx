@@ -1,27 +1,39 @@
-/**  @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+import logo from '@/assets/logoTitle.svg';
 
 import styles from './styles';
 
-const Header = () => {
-  const [isVisibaleButton, setIsVisibaleButton] = useState(true);
+const hostId = 1;
 
+const Header = () => {
+  const [isShowButton] = useState(true);
   const navigate = useNavigate();
 
-  const handlePreviousButtonClick = () => {
+  const handleClickPreviousButton = () => {
     navigate(-1);
+  };
 
-    // TO DO:
-    // 현재 path 네임 알아오고
-    // path 네임별로 뒤로갈 위치 정해주기
+  const handleClickLogo = () => {
+    navigate(`/enter/${hostId}/spaces`);
   };
 
   return (
-    <div css={styles.headerDiv}>
-      {isVisibaleButton && <IoIosArrowBack css={styles.arrowBackIcon} onClick={handlePreviousButtonClick} size={30} />}
-      <h1>GongCheck</h1>
+    <div css={styles.header}>
+      {isShowButton && <IoIosArrowBack css={styles.arrowBackIcon} onClick={handleClickPreviousButton} size={30} />}
+      <div
+        css={css`
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%, 10%);
+        `}
+        onClick={handleClickLogo}
+      >
+        <img src={logo} alt="logoTitle" />
+      </div>
       <div></div>
     </div>
   );

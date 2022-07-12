@@ -1,24 +1,19 @@
-/**  @jsxImportSource @emotion/react */
-import { useRoutes } from 'react-router-dom';
-import Header from './components/Header';
 import routes from './Routes';
-import { css } from '@emotion/react';
+import { useRoutes } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+
+import { isShowModalState, modalComponentState } from '@/recoil/modal';
 
 const App = () => {
+  const isShowModal = useRecoilValue(isShowModalState);
+  const modalComponent = useRecoilValue(modalComponentState);
   const content = useRoutes(routes);
 
   return (
-    <div
-      css={css`
-        display: flex;
-        width: 400px;
-        height: auto;
-        border: 1px solid black;
-      `}
-    >
-      <Header />
+    <>
       {content}
-    </div>
+      {isShowModal && modalComponent}
+    </>
   );
 };
 
