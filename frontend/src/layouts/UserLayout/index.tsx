@@ -1,34 +1,37 @@
+import ErrorUserBoundary from '@/ErrorBoundary/ErrorUserBoundary';
+import { Global } from '@emotion/react';
 import { Suspense, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 
-import Header from '@/components/Header';
-import InputModal from '@/components/InputModal';
+import { ID } from '@/types';
 
-import useModal from '@/hooks/useModal';
+import transitions from '@/styles/transitions';
 
-const UserLayout = () => {
-  const { openModal } = useModal();
+import styles from './styles';
+
+const UserLayout: React.FC = () => {
+  const navigate = useNavigate();
+
+  const { hostId } = useParams() as { hostId: ID };
 
   useEffect(() => {
-    if (!localStorage.getItem('user')) {
-      openModal(
-        <InputModal
-          title="비밀번호 입력"
-          detail="해당 공간의 관계자만 접근할 수 있습니다."
-          placeholder="비밀번호를 입력해주세요."
-          buttonText="확인"
-        />
-      );
+    sessionStorage.setItem('tokenKey', `${hostId}`);
+    const token = localStorage.getItem(`${hostId}`);
+
+    if (!token) {
+      navigate(`/enter/${hostId}/pwd`);
     }
-  });
+  }, []);
 
   return (
-    <>
-      <Header />
-      <Suspense fallback={<div>로딩 스피너</div>}>
-        <Outlet />
-      </Suspense>
-    </>
+    <ErrorUserBoundary>
+      <div css={styles.layout}>
+        <Global styles={transitions} />
+        <Suspense fallback={<div css={styles.fallback} />}>
+          <Outlet />
+        </Suspense>
+      </div>
+    </ErrorUserBoundary>
   );
 };
 

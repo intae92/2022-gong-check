@@ -1,0 +1,6 @@
+[[Task]]
+== task
+
+=== Task 정보 조회
+
+operation::tasks/find/success[snippets='http-request,http-response,path-parameters,response-fields']

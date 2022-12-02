@@ -1,0 +1,49 @@
+import { AxiosResponse } from 'axios';
+
+import { ID } from '@/types';
+import { ApiTaskData } from '@/types/apis';
+
+import { axiosInstanceToken } from './config';
+
+const postNewRunningTasks = async (jobId: ID) => {
+  return axiosInstanceToken({
+    method: 'POST',
+    url: `/api/jobs/${jobId}/runningTasks/new`,
+  });
+};
+
+const getRunningTasks = async (jobId: ID) => {
+  const { data }: AxiosResponse<ApiTaskData> = await axiosInstanceToken({
+    method: 'GET',
+    url: `/api/jobs/${jobId}/runningTasks`,
+  });
+
+  return data;
+};
+
+const getTasks = async (jobId: ID) => {
+  const { data }: AxiosResponse<ApiTaskData> = await axiosInstanceToken({
+    method: 'GET',
+    url: `/api/jobs/${jobId}/tasks`,
+  });
+
+  return data;
+};
+
+const postCheckTask = (taskId: ID) => {
+  return axiosInstanceToken({
+    method: 'POST',
+    url: `/api/tasks/${taskId}/flip`,
+  });
+};
+
+const postSectionAllCheckTask = (sectionId: ID) => {
+  return axiosInstanceToken({
+    method: 'POST',
+    url: `/api/sections/${sectionId}/runningTask/allCheck`,
+  });
+};
+
+const apiTask = { getRunningTasks, getTasks, postNewRunningTasks, postCheckTask, postSectionAllCheckTask };
+
+export default apiTask;
